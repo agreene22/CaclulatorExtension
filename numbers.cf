@@ -1,0 +1,12 @@
+Plus. Exp ::= Exp "+" Exp1 ;
+Times. Exp1 ::= Exp1 "*" Exp2 ;
+Sub. Exp2 ::= Exp2 "-" Exp3 ;
+Div. Exp3 ::= Exp3 "/" Exp4 ;
+Mod. Exp4 ::= Exp4 "mod" Exp5 ;
+Neg. Exp5 ::= "neg" Exp5 ;
+Pow. Exp6 ::= Exp6 "^" Exp7 ;
+Sqrt. Exp7 ::= "sqrt" Exp8 ;
+
+Num. Exp8 ::= Integer ;
+
+coercions Exp 8 ;
