@@ -156,11 +156,32 @@ nbv m = ii_int (int_ii m)
 -- Booleans
 ------------
 
+-- Less Than for Positive Integers
 -- use recursion over PP
 lessthanPP :: PP -> PP -> Bool
 lessthanPP a I = False
 lessthanPP I a = True
 lessthanPP (T a) (T b) = lessthanPP a b
+
+
+-- Greater Than for Positive Integers
+-- use recursion over PP
+greaterthanPP :: PP -> PP -> Bool
+greaterthanPP a I = True
+greaterthanPP I a = False
+greaterthanPP (T a) (T b) = greaterthanPP a b
+
+
+-- using Booleans in other functions such as insert
+insert :: Int -> [Int] -> [Int]
+insert x [] = [x]
+insert x (y:ys) | x <= y = x:y:ys
+                | otherwise = y:(insert x ys)
+
+-- using Booleans in other functions such as sort 
+sort :: [Int] -> [Int]
+sort [] = []
+sort (x:xs) = insert x (sort xs)
 
 ----------
 -- Testing
