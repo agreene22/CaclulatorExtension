@@ -139,8 +139,16 @@ pp_int 1 = I
 pp_int n = addP I (pp_int (n - 1))
 
 int_pp :: PP -> Integer
-int_pp I = 1
+int_pp I = 1s
 int_pp (T n) = 1 + int_pp (n)
+
+pp_nn :: PP -> NN
+pp_nn I = (S O)
+pp_nn (T n)= S (pp_nn n)
+
+nn_pp :: NN -> PN
+nn_pp (S O)= I
+nn_pp (S n)= T (nn_pp n)
 
 float_qq :: QQ -> Float
 float_qq (QQ n m) = fromIntegral (int_ii n) / fromIntegral (int_pp m)
@@ -196,8 +204,39 @@ addFraction ((S a),(S b)) (x,y) | (S b) == y = (addN (S a) x, y)
                                 | (S b) /= y = addFraction (mult (S a) y, (mult (S b) y)) (mult x b), (mult (S a) y))
 
 -- multiplication of Fractions
-multFrac :: Frac -> Frac -> Frac
+multFrac :: Fraction -> Fraction -> Fraction
 multFrac ((S n),(T m)) (x,y) = (multN (S n) x , multP (T m) y)
+
+
+-- equality of Fractions
+equalityFrac :: Fraction -> Fraction -> Bool
+equalityFrac ((S n),(T m)) (x,y) = (mult (S n) (pp_nn y)) == (mult (pp_nn (T m)) x)
+
+-- subtraction of natural numbers
+subNN :: NN -> NN -> NN
+subNN O n = O
+subNN n O = n
+subNN (S n) (S m) = subNN n m
+
+-- greatest common divisor for natural numbers
+gcdNN :: NN -> NN -> NN
+gcdNN O O = O
+gcdNN O n = n
+gcdNN n m | less n m==False = gcdNN m (subNN n m)
+          | less n m==True = gcdNN n (subNN m n)
+
+
+-- divide a natural number by a positive integers
+divPP :: NN -> PN -> NN
+divPP n m = if n == (pp_nn m) then (S O)
+        else if (less n (pp_nn m)) then O
+                else (add (S O) (divPP (subNN n m) m))
+
+
+-- simplify fractions
+simplifyFrac :: Fraction -> Fraction
+simplifyFrac ((S n),(T m)) = ((divPP (S n) (nn_pp(gcdNN (S n) (pp_nn (T m))))),
+                                 (nn_pp (divPP (pp_nn(T m)) (nn_pp(gcdNN (S n) (pp_nn (T m)))))))
 
 ----------
 -- Testing
