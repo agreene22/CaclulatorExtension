@@ -178,10 +178,26 @@ insert x [] = [x]
 insert x (y:ys) | x <= y = x:y:ys
                 | otherwise = y:(insert x ys)
 
--- using Booleans in other functions such as sort 
+-- using Booleans in other functions such as sort
 sort :: [Int] -> [Int]
 sort [] = []
 sort (x:xs) = insert x (sort xs)
+
+
+------------
+-- Fractions
+------------
+-- Declaring Fraction data type
+data Fraction = NN NN
+
+-- add Fractions
+addFraction :: Fraction -> Fraction -> Fraction
+addFraction ((S a),(S b)) (x,y) | (S b) == y = (addN (S a) x, y)
+                                | (S b) /= y = addFraction (mult (S a) y, (mult (S b) y)) (mult x b), (mult (S a) y))
+
+-- multiplication of Fractions
+multFrac :: Frac -> Frac -> Frac
+multFrac ((S n),(T m)) (x,y) = (multN (S n) x , multP (T m) y)
 
 ----------
 -- Testing
