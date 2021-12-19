@@ -152,9 +152,15 @@ float_qq (QQ n m) = fromIntegral (int_ii n) / fromIntegral (int_pp m)
 nbv :: II -> II
 nbv m = ii_int (int_ii m)
 
-------------------------------
+------------
 -- Booleans
-------------------------------
+------------
+
+-- use recursion over PP
+lessthanPP :: PP -> PP -> Bool
+lessthanPP a I = False
+lessthanPP I a = True
+lessthanPP (T a) (T b) = lessthanPP a b
 
 ----------
 -- Testing
