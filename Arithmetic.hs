@@ -201,7 +201,13 @@ data Fraction = NN NN
 -- add Fractions
 addFraction :: Fraction -> Fraction -> Fraction
 addFraction ((S a),(S b)) (x,y) | (S b) == y = (addN (S a) x, y)
-                                | (S b) /= y = addFraction (mult (S a) y, (mult (S b) y)) (mult x b), (mult (S a) y))
+                                | (S b) /= y = addFraction (multN (S a) y, (multN (S b) y)) (multN x b), (multN (S a) y))
+
+-- subtract Fractions
+subFraction :: Fraction -> Fraction -> Fraction
+subFraction ((S a),(S b)) (x,y) | (S b) == y = (subN (S a) x, y)
+                              | (S b) /= y = addFraction (multN (S a) y, (multN (S b) y)) (multN x b), (multN (S a) y))
+
 
 -- multiplication of Fractions
 multFrac :: Fraction -> Fraction -> Fraction
